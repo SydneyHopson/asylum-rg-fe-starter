@@ -18,7 +18,7 @@ function RenderLandingPage(props) {
 
   return (
     <div className="main">
-      <div className="header">
+      <div className="header" style={{ marginBottom: '40px' }}>
         <div className="header-text-container">
           <h1>Asylum Office Grant Rate Tracker</h1>
           <h3>
@@ -29,7 +29,7 @@ function RenderLandingPage(props) {
         </div>
       </div>
 
-      <div className="graphs-section">
+      <div className="graphs-section" style={{ marginTop: '40px' }}>
         <div className="graph-item">
           <img src={GrantRatesByOfficeImg} alt="Grant Rates By Office" />
           <p>Search Grant Rates By Office</p>
@@ -97,8 +97,7 @@ function RenderLandingPage(props) {
       <div className="bottom-section">
         <h1>Systemic Disparity Insights</h1>
         <div className="bottom-container">
-          {}{' '}
-          <div className=" bottom-section">
+          <div className="bottom-container-item left">
             <h2>36%</h2>
             <p>
               By the end of the Trump administration, the average asylum office
@@ -106,14 +105,14 @@ function RenderLandingPage(props) {
               fiscal year 2016 to 28 percent in fiscal year 2020.
             </p>
           </div>
-          <div className="bottom-container-middle">
+          <div className="bottom-container-item middle">
             <h2>5%</h2>
             <p>
               The New York asylum office grant rate dropped to 5 percent in
               fiscal year 2020.
             </p>
           </div>
-          <div className="bottom-container-right">
+          <div className="bottom-container-item right">
             <h2>6X lower</h2>
             <p>
               Between fiscal year 2017 and 2020, the New York asylum office’s
@@ -121,20 +120,23 @@ function RenderLandingPage(props) {
               asylum office.
             </p>
           </div>
-          <div className="bottom-read-more-button-middle">
-            <button
-              type="default"
-              style={{ backgroundColor: 'gray', color: 'white' }}
-            >
-              Read More
-            </button>
-          </div>
+        </div>
+
+        <div className="bottom-read-more-button-middle">
+          <button
+            type="default"
+            style={{ backgroundColor: 'gray', color: 'white' }}
+          >
+            Read More
+          </button>
+        </div>
+
+        <div style={{ marginTop: '20px' }}>
+          <p onClick={() => scrollToTop()} className="back-to-top">
+            Back To Top ^
+          </p>
         </div>
       </div>
-
-      <p onClick={() => scrollToTop()} className="back-to-top">
-        Back To Top ^
-      </p>
     </div>
   );
 }

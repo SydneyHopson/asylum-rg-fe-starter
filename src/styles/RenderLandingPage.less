@@ -9,18 +9,11 @@
 @laptop: ~"(min-width: 1025px) and (max-width: 1280px)";
 
 .header {
-    background-color: @main-color;
+    background-color: #333333;
     display: flex;
-    text-align: center;
-    width: 100%;
-    height: 22vh; /* Increased height */
-    margin-bottom: 7%; /* Increased margin */
-  }
-  
-  .hrf-logo-img-container img {
-    height: 65px; /* Increased height */
-    width: 100px; /* Increased width */
-    margin-left: 17%; /* Adjusted margin */
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
   }
   
   .header-text-container {
@@ -30,25 +23,25 @@
   }
   
   .header-text-container h1 {
-    font-size: 3.06rem; /* Increased font-size */
-    color: @white;
-    font-family: 'moneta';
+    font-size: 3.06rem;
+    color: white;
+    font-family: "Roboto", sans-serif;
   }
   
   .header-text-container h3 {
     font-family: 'beatrice regular';
-    color: @white;
-    font-size: 1.22rem; /* Increased font-size */
+    color: white;
+    font-size: 1.22rem;
   }
   
   .graphs-section {
     display: flex;
     justify-content: space-evenly;
-    margin-bottom: 7%; /* Increased margin */
+    margin-bottom: 7%;
   }
   
   .graphs-section img {
-    height: 204px; /* Increased height */
+    height: 204px;
     width: initial;
     margin: 0 auto;
   }
@@ -56,43 +49,35 @@
   .graphs-section p {
     text-align: center;
     font-family: 'beatrice regular';
-    font-size: 1.43rem; /* Increased font-size */
-  }
-  
-  .button-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 6%; /* Increased margin */
+    font-size: 1.43rem;
   }
   
   .view-more-data-btn-container,
-  .download-the-data-btn-container,
-  .read-more-btn-container {
-    margin: 0 2%; /* Adjusted margin */
+  .download-the-data-btn-container {
+    margin: 0 2%;
   }
   
   .middle-section {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    margin: 6% 0; /* Increased margin */
+    margin: 6% 0;
   }
   
   .hrf-img {
-    height: 346px; /* Increased height */
-    width: 663px; /* Increased width */
+    height: 400px;
+    width: 700px;
     border-radius: 10px;
   }
   
   .middle-section-text-container {
-    width: 714px; /* Increased width */
+    width: 714px;
     text-align: center;
   }
   
   .middle-section-text-container h3 {
     font-family: 'acumin';
-    font-size: 1.43rem; /* Increased font-size */
+    font-size: 1.43rem;
   }
   
   .bottom-section {
@@ -101,7 +86,7 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    margin-bottom: 6%; /* Increased margin */
+    margin-bottom: 6%;
   }
   
   .bottom-section h1,
@@ -110,7 +95,7 @@
   .bottom-section h4,
   .bottom-section h5,
   .bottom-section h6 {
-    font-size: 51px; /* Increased font-size */
+    font-size: 51px;
     font-weight: bold;
     font-family: "Roboto", sans-serif;
     color: #333333;
@@ -119,7 +104,7 @@
   .bottom-container {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 6%; /* Increased margin */
+    margin-bottom: 6%;
   }
   
   .bottom-container-item {
@@ -132,52 +117,42 @@
   }
   
   .bottom-container-item.left {
-    margin-right: 34px; /* Adjusted margin */
-    
+    margin-right: 34px;
   }
   
   .bottom-container-item.middle {
-    margin: 0 34px; /* Adjusted margin */
+    margin: 0 34px;
   }
   
   .bottom-container-item.right {
-    margin-left: 34px; /* Adjusted margin */
+    margin-left: 34px;
   }
   
   .bottom-container-item h2 {
-    font-size: 41px; /* Increased font-size */
+    font-size: 41px;
     font-weight: bold;
     font-family: "Roboto", sans-serif;
     color: #333333;
-    margin-bottom: 12px; /* Adjusted margin */
+    margin-bottom: 12px;
   }
   
-  .bottom-container-middle,  p {
-    margin-top: 12px; /* Adjusted margin */
+  .bottom-container-item p {
+    margin-top: 12px;
     font-family: "Roboto", sans-serif;
     color: #666666;
-    font-size: 1.43rem; /* Increased font-size */
+    font-size: 1.43rem;
   }
   
-  .bottom-read-more-button {
-    margin-left: 24px; /* Adjusted margin */
-  }
-  
-  .bottom-section-title {
-    font-size: 61px; /* Increased font-size */
-    font-weight: bold;
-    font-family: "Roboto", sans-serif;
-    color: #333333;
-    margin-bottom: 22px; /* Adjusted margin */
+  .bottom-read-more-button-middle {
+    margin-top: 20px;
   }
   
   .footer {
     background-color: #333333;
     display: flex;
     justify-content: space-between;
-    padding: 22px; /* Increased padding */
+    padding: 22px;
     color: #ffffff;
     font-family: "Roboto", sans-serif;
     font-size: 14px;
   }
-  
