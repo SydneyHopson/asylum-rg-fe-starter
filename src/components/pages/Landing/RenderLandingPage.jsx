@@ -10,8 +10,7 @@ import PageNav from '../../common/PageNav';
 
 function RenderLandingPage(props) {
   const scrollToTop = () => {
-    document.body.scrollTop = 0;
-    document.documentElement.scrollTop = 0;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const history = useHistory();
@@ -36,16 +35,16 @@ function RenderLandingPage(props) {
         </div>
 
         <div className="graph-item middle-top">
+          <img src={GrantRatesOverTimeImg} alt="Grant Rates Over Time" />
+          <p>Search Grant Rates Over Time</p>
+        </div>
+
+        <div className="graph-item">
           <img
             src={GrantRatesByNationalityImg}
             alt="Grant Rates By Nationality"
           />
           <p>Search Grant Rates By Nationality</p>
-        </div>
-
-        <div className="graph-item">
-          <img src={GrantRatesOverTimeImg} alt="Grant Rates Over Time" />
-          <p>Search Grant Rates Over Time</p>
         </div>
       </div>
 
@@ -66,14 +65,16 @@ function RenderLandingPage(props) {
           </Button>
         </div>
 
-        <div style={{ marginLeft: '9px' }}>
-          <Button
-            type="default"
-            style={{ backgroundColor: '#404C4A', color: '#FFFFFF' }}
-            // onClick={() => handleDownload()}
-          >
-            Download the Data
-          </Button>
+        <div className="download-data-btn">
+          <div style={{ marginLeft: '9px' }}>
+            <Button
+              type="default"
+              style={{ backgroundColor: '#404C4A', color: '#FFFFFF' }}
+              // onClick={() => handleDownload()}
+            >
+              Download the Data
+            </Button>
+          </div>
         </div>
       </div>
 
@@ -124,7 +125,7 @@ function RenderLandingPage(props) {
 
         <div className="bottom-read-more-button-middle">
           <button
-            type="default"
+            type="button"
             style={{ backgroundColor: 'gray', color: 'white' }}
           >
             Read More
@@ -132,7 +133,7 @@ function RenderLandingPage(props) {
         </div>
 
         <div style={{ marginTop: '20px' }}>
-          <p onClick={() => scrollToTop()} className="back-to-top">
+          <p onClick={scrollToTop} className="back-to-top">
             Back To Top ^
           </p>
         </div>

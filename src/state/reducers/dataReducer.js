@@ -11,22 +11,23 @@ import {
 export const initialState = {
   cases: [],
   comparisonData: {
-    //This will hold keys and values for default displays on the site landing page, similar to TRAC
+    // This will hold keys and values for default displays on the site landing page, similar to TRAC
   },
   filterCount: 0,
   filteredCases: [],
   displayAdvancedSearch: false,
 };
+
 function dataReducer(state = initialState, action) {
   switch (action.type) {
     case GET_DEFAULT_COMPARISONS: {
-      //When memoized comparison data is fetched from the server to display on the site landing page
+      // When memoized comparison data is fetched from the server to display on the site landing page
       return {
         ...state,
         comparisonData: action.payload,
       };
     }
-    //When a filter querystring is passed to the server and case data is returned
+    // When a filter query string is passed to the server and case data is returned
     case GET_FILTERED_DATA: {
       return {
         ...state,
@@ -43,14 +44,14 @@ function dataReducer(state = initialState, action) {
       return {
         ...state,
         filteredCases: action.payload,
-        filterCount: state.count + 1,
+        filterCount: state.filterCount + 1,
       };
     }
     case PERFORM_ADVANCED_SEARCH: {
       return {
         ...state,
         filteredCases: action.payload,
-        filterCount: state.count + 1,
+        filterCount: state.filterCount + 1,
       };
     }
     case TOGGLE_ADVANCED_SEARCH: {
