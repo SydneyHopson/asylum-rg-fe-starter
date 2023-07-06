@@ -27,7 +27,7 @@ function RenderLandingPage(props) {
           </h3>
         </div>
       </div>
-
+      //
       <div className="graphs-section" style={{ marginTop: '40px' }}>
         <div className="graph-item">
           <img src={GrantRatesByOfficeImg} alt="Grant Rates By Office" />
@@ -47,7 +47,6 @@ function RenderLandingPage(props) {
           <p>Search Grant Rates By Nationality</p>
         </div>
       </div>
-
       <div
         style={{
           display: 'flex',
@@ -77,7 +76,6 @@ function RenderLandingPage(props) {
           </div>
         </div>
       </div>
-
       <div className="middle-section">
         <div className="hrf-img-container">
           <img src={HrfPhoto} alt="Human Rights First" className="hrf-img" />
@@ -94,7 +92,6 @@ function RenderLandingPage(props) {
           </h3>
         </div>
       </div>
-
       <div className="bottom-section">
         <h1>Systemic Disparity Insights</h1>
         <div className="bottom-container">
