@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import CitizenshipMapAll from './Graphs/CitizenshipMapAll';
@@ -12,23 +12,28 @@ import axios from 'axios';
 import { resetVisualizationQuery } from '../../../state/actionCreators';
 import { colors } from '../../../styles/data_vis_colors';
 import ScrollToTopOnMount from '../../../utils/scrollToTopOnMount';
+//import test_data from '../../../data/test_data.json';
 
 const { background_color } = colors;
 
-function GraphWrapper(props) {
-  const { set_view, dispatch } = props;
-  let { office, view } = useParams();
+const URL = 'https://hrf-asylum-be-b.herokuapp.com/cases';
 
-  useEffect(() => {
-    if (!view) {
-      set_view('time-series');
-      view = 'time-series';
-    }
-  }, [set_view, view]);
+function GraphWrapper(props) {
+  // Extracting necessary props
+  const { set_view, dispatch } = props;
+
+  // Extracting 'office' and 'view' from URL parameters using the 'useParams' hook
+  const { office, view } = useParams();
+
+  // Checking if 'view' is not defined and setting it to a default value of 'time-series'
+  if (!view) {
+    set_view('time-series');
+    view = 'time-series';
+  }
 
   let map_to_render;
-
   if (!office) {
+    // No specific office selected
     switch (view) {
       case 'time-series':
         map_to_render = <TimeSeriesAll />;
@@ -43,6 +48,7 @@ function GraphWrapper(props) {
         break;
     }
   } else {
+    // Specific office selected
     switch (view) {
       case 'time-series':
         map_to_render = <TimeSeriesSingleOffice office={office} />;
@@ -55,25 +61,76 @@ function GraphWrapper(props) {
     }
   }
 
+  // Function to update state with new data based on selected years, view, and office
   function updateStateWithNewData(years, view, office, stateSettingCallback) {
-    const endpoint =
-      office && office !== 'all' ? '/fiscalSummary' : '/citizenshipSummary';
-    const params = {
-      from: years[0],
-      to: years[1],
-      ...(office && office !== 'all' && { office }),
-    };
-
-    axios
-      .get(`https://hrf-asylum-be-b.herokuapp.com/cases${endpoint}`, { params })
-      .then(result => {
-        stateSettingCallback(view, office, result.data);
-      })
-      .catch(err => {
-        console.error(err);
-      });
+    if (office === 'all' || !office) {
+      // Request data based on 'view' parameter
+      if (view === 'citizenship') {
+        axios
+          .get(`${URL}/citizenshipSummary`, {
+            params: {
+              from: years[0],
+              to: years[1],
+            },
+          })
+          .then(res => {
+            stateSettingCallback(view, office, res.data);
+          })
+          .catch(err => {
+            console.error(err);
+          });
+      } else {
+        axios
+          .get(`${URL}/fiscalSummary`, {
+            params: {
+              from: years[0],
+              to: years[0],
+            },
+          })
+          .then(res => {
+            stateSettingCallback(view, office, res.data);
+          })
+          .catch(err => {
+            console.error(err);
+          });
+      }
+    } else {
+      // Request data based on 'view' and 'office' parameters
+      if (view === 'citizenship') {
+        axios
+          .get(`${URL}/citizenshipSummary`, {
+            params: {
+              from: years[0],
+              to: years[1],
+              office: office,
+            },
+          })
+          .then(res => {
+            stateSettingCallback(view, office, res.data);
+          })
+          .catch(err => {
+            console.error(err);
+          });
+      } else {
+        axios
+          .get(`${URL}/fiscalSummary`, {
+            params: {
+              from: years[0],
+              to: years[1],
+              office: office,
+            },
+          })
+          .then(res => {
+            stateSettingCallback(view, office, res.data);
+          })
+          .catch(err => {
+            console.error(err);
+          });
+      }
+    }
   }
 
+  // Function to clear the query
   const clearQuery = (view, office) => {
     dispatch(resetVisualizationQuery(view, office));
   };
@@ -113,4 +170,5 @@ function GraphWrapper(props) {
   );
 }
 
+// Connect the component to the Redux store using the 'connect' function
 export default connect()(GraphWrapper);
