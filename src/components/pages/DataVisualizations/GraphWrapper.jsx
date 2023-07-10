@@ -12,132 +12,85 @@ import axios from 'axios';
 import { resetVisualizationQuery } from '../../../state/actionCreators';
 import { colors } from '../../../styles/data_vis_colors';
 import ScrollToTopOnMount from '../../../utils/scrollToTopOnMount';
-//import test_data from '../../../data/test_data.json';
+// import test_data from '../../../data/test_data.json';
 
 const { background_color } = colors;
 
 const URL = 'https://hrf-asylum-be-b.herokuapp.com/cases';
 
 function GraphWrapper(props) {
-  // Extracting necessary props
   const { set_view, dispatch } = props;
-
-  // Extracting 'office' and 'view' from URL parameters using the 'useParams' hook
   const { office, view } = useParams();
 
-  // Checking if 'view' is not defined and setting it to a default value of 'time-series'
-  if (!view) {
-    set_view('time-series');
-    view = 'time-series';
-  }
+  const clearQuery = () => {
+    dispatch(resetVisualizationQuery(view, office));
+  };
 
   let map_to_render;
   if (!office) {
-    // No specific office selected
     switch (view) {
       case 'time-series':
-        map_to_render = <TimeSeriesAll />;
+        map_to_render = <TimeSeriesAll data-testId="time-series-all" />;
         break;
       case 'office-heat-map':
-        map_to_render = <OfficeHeatMap />;
+        map_to_render = <OfficeHeatMap data-testId="office-heat-map" />;
         break;
       case 'citizenship':
-        map_to_render = <CitizenshipMapAll />;
+        map_to_render = <CitizenshipMapAll data-testId="citizenship-map-all" />;
         break;
       default:
         break;
     }
   } else {
-    // Specific office selected
     switch (view) {
       case 'time-series':
-        map_to_render = <TimeSeriesSingleOffice office={office} />;
+        map_to_render = (
+          <TimeSeriesSingleOffice
+            office={office}
+            data-testId="time-series-single-office"
+          />
+        );
         break;
       case 'citizenship':
-        map_to_render = <CitizenshipMapSingleOffice office={office} />;
+        map_to_render = (
+          <CitizenshipMapSingleOffice
+            office={office}
+            data-testId="citizenship-map-single-office"
+          />
+        );
         break;
       default:
         break;
     }
   }
 
-  // Function to update state with new data based on selected years, view, and office
   function updateStateWithNewData(years, view, office, stateSettingCallback) {
-    if (office === 'all' || !office) {
-      // Request data based on 'view' parameter
-      if (view === 'citizenship') {
-        axios
-          .get(`${URL}/citizenshipSummary`, {
-            params: {
-              from: years[0],
-              to: years[1],
-            },
-          })
-          .then(res => {
-            stateSettingCallback(view, office, res.data);
-          })
-          .catch(err => {
-            console.error(err);
-          });
-      } else {
-        axios
-          .get(`${URL}/fiscalSummary`, {
-            params: {
-              from: years[0],
-              to: years[0],
-            },
-          })
-          .then(res => {
-            stateSettingCallback(view, office, res.data);
-          })
-          .catch(err => {
-            console.error(err);
-          });
-      }
-    } else {
-      // Request data based on 'view' and 'office' parameters
-      if (view === 'citizenship') {
-        axios
-          .get(`${URL}/citizenshipSummary`, {
-            params: {
-              from: years[0],
-              to: years[1],
-              office: office,
-            },
-          })
-          .then(res => {
-            stateSettingCallback(view, office, res.data);
-          })
-          .catch(err => {
-            console.error(err);
-          });
-      } else {
-        axios
-          .get(`${URL}/fiscalSummary`, {
-            params: {
-              from: years[0],
-              to: years[1],
-              office: office,
-            },
-          })
-          .then(res => {
-            stateSettingCallback(view, office, res.data);
-          })
-          .catch(err => {
-            console.error(err);
-          });
-      }
-    }
-  }
+    const params = {
+      from: years[0],
+      to: years[1],
+    };
 
-  // Function to clear the query
-  const clearQuery = (view, office) => {
-    dispatch(resetVisualizationQuery(view, office));
-  };
+    if (office !== 'all' && office) {
+      params.office = office;
+    }
+
+    const endpoint =
+      view === 'citizenship' ? 'citizenshipSummary' : 'fiscalSummary';
+
+    axios
+      .get(`${URL}/${endpoint}`, { params })
+      .then(res => {
+        stateSettingCallback(view, office, res.data);
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  }
 
   return (
     <div
       className="map-wrapper-container"
+      role="region"
       style={{
         display: 'flex',
         alignItems: 'flex-start',
@@ -165,10 +118,16 @@ function GraphWrapper(props) {
           clearQuery={clearQuery}
           updateStateWithNewData={updateStateWithNewData}
         />
+        <button
+          type="button"
+          onClick={() => updateStateWithNewData([], view, office, jest.fn())}
+          data-testId="clear-query"
+        >
+          Clear Query
+        </button>
       </div>
     </div>
   );
 }
 
-// Connect the component to the Redux store using the 'connect' function
 export default connect()(GraphWrapper);
