@@ -5,3 +5,8 @@
 import '@testing-library/jest-dom/extend-expect';
 import 'jest-prop-type-error';
 import 'jest-canvas-mock';
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+
+Enzyme.configure({ adapter: new Adapter() });
+window.URL.createObjectURL = jest.fn();
